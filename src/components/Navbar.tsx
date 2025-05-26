@@ -346,153 +346,187 @@ const Navbar: React.FC = observer(() => {
 
       {/* Mobil menü */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-white border-b border-gray-200">
-          <div className="pt-2 pb-3 space-y-1">
-            <Link
-              to="/"
-              className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300"
-            >
-              Ana Sayfa
-            </Link>
-            <Link
-              to="/jobs"
-              className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300"
-            >
-              İlanlar
-            </Link>
-            <Link
-              to="/team"
-              className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300"
-            >
-              Ekibimiz
-            </Link>
-            <Link
-              to="/visitors"
-              className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300"
-            >
-              Sizden Gelenler
-            </Link>
-            {isAdmin && (
-              <Link
-                to="/admin/dashboard"
-                className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-red-700 hover:bg-gray-50 hover:border-red-300"
+        <>
+          {/* Overlay - menü açıkken arka planı karartan katman */}
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 sm:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          
+          {/* Drawer - sağdan açılan menü */}
+          <div className="sm:hidden fixed inset-y-0 right-0 w-[80%] max-w-sm bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out">
+            <div className="flex justify-between items-center p-4 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900">Menü</h2>
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-50"
               >
-                Admin Paneli
-              </Link>
-            )}
-            {!user ? (
-              <>
-                <div className="p-4">
-                  <div className="mb-4">
-                    <p className="text-sm text-gray-600 mb-2">Aday (İş mi Arıyorsun?)</p>
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="overflow-y-auto h-full pb-20">
+              <div className="pt-2 pb-3 space-y-1">
+                <Link
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-2.5 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
+                >
+                  Ana Sayfa
+                </Link>
+                <Link
+                  to="/jobs"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-2.5 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
+                >
+                  İlanlar
+                </Link>
+                <Link
+                  to="/team"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-2.5 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
+                >
+                  Ekibimiz
+                </Link>
+                <Link
+                  to="/visitors"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-2.5 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
+                >
+                  Sizden Gelenler
+                </Link>
+                {isAdmin && (
+                  <Link
+                    to="/admin/dashboard"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block px-4 py-2.5 text-base font-medium text-red-600 hover:bg-red-50 transition-colors duration-200"
+                  >
+                    Admin Paneli
+                  </Link>
+                )}
+              </div>
+
+              {!user ? (
+                <div className="px-4 py-5 border-t border-gray-200">
+                  <div className="mb-6">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-2">Aday (İş mi Arıyorsun?)</h3>
                     <div className="flex flex-col space-y-2">
                       <Link
                         to="/login?type=jobseeker"
-                        className="text-center bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-2 rounded-md text-sm font-medium"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center px-4 py-2.5 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors duration-200"
                       >
+                        <span className="mr-2">👤</span>
                         Aday Girişi
                       </Link>
                       <Link
                         to="/register?type=jobseeker"
-                        className="text-center bg-blue-600 text-white hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
                       >
+                        <span className="mr-2">✨</span>
                         Üye Ol
                       </Link>
                     </div>
                   </div>
                   
-                  <div className="border-t border-gray-200 pt-4">
-                    <p className="text-sm text-gray-600 mb-2">İşveren (İlan mı Vereceksiniz?)</p>
+                  <div className="pt-6 border-t border-gray-200">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-2">İşveren (İlan mı Vereceksiniz?)</h3>
                     <div className="flex flex-col space-y-2">
                       <Link
                         to="/login?type=employer"
-                        className="text-center bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-2 rounded-md text-sm font-medium"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center px-4 py-2.5 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors duration-200"
                       >
+                        <span className="mr-2">💼</span>
                         İşveren Girişi
                       </Link>
                       <Link
                         to="/register?type=employer"
-                        className="text-center bg-blue-600 text-white hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
                       >
+                        <span className="mr-2">🏢</span>
                         Üye Ol
                       </Link>
                     </div>
                   </div>
                 </div>
-              </>
-            ) : (
-              <>
-                {userType === 'employer' && (
-                  <Link
-                    to="/employer/dashboard"
-                    className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300"
-                  >
-                    İlanlarım
-                  </Link>
-                )}
-                {userType === 'jobseeker' && (
-                  <>
+              ) : (
+                <div className="px-4 py-5 border-t border-gray-200">
+                  {userType === 'employer' && (
                     <Link
-                      to="/my-applications"
-                      className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300"
+                      to="/employer/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block px-4 py-2.5 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
                     >
-                      Başvurularım
+                      İlanlarım
                     </Link>
-                    <Link
-                      to="/profile"
-                      className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300"
-                    >
-                      Profilim
-                    </Link>
-                  </>
-                )}
-                {userType === 'admin' && (
-                  <Link
-                    to="/admin"
-                    className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300"
-                  >
-                    Yönetici Paneli
-                  </Link>
-                )}
-                {userType === 'employer' && (
-                  <Link
-                    to="/notifications"
-                    className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 flex items-center justify-between"
-                  >
-                    <div className="flex items-center">
-                      <svg 
-                        className="h-5 w-5 mr-2" 
-                        fill="none" 
-                        viewBox="0 0 24 24" 
-                        stroke="currentColor"
+                  )}
+                  {userType === 'jobseeker' && (
+                    <>
+                      <Link
+                        to="/my-applications"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block px-4 py-2.5 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
                       >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" 
-                        />
-                      </svg>
-                      Bildirimler
-                    </div>
-                    {notificationViewModel.unreadCount > 0 && (
-                      <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                        {notificationViewModel.unreadCount}
-                      </span>
-                    )}
-                  </Link>
-                )}
+                        Başvurularım
+                      </Link>
+                      <Link
+                        to="/profile"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block px-4 py-2.5 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
+                      >
+                        Profilim
+                      </Link>
+                    </>
+                  )}
+                  {userType === 'employer' && (
+                    <Link
+                      to="/notifications"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between px-4 py-2.5 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
+                    >
+                      <div className="flex items-center">
+                        <svg 
+                          className="h-5 w-5 mr-2" 
+                          fill="none" 
+                          viewBox="0 0 24 24" 
+                          stroke="currentColor"
+                        >
+                          <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={2} 
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" 
+                          />
+                        </svg>
+                        Bildirimler
+                      </div>
+                      {notificationViewModel.unreadCount > 0 && (
+                        <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          {notificationViewModel.unreadCount}
+                        </span>
+                      )}
+                    </Link>
+                  )}
 
-                <button
-                  onClick={handleLogout}
-                  className="block w-full text-left pl-3 pr-4 py-2 border-l-4 text-base font-medium text-red-700 hover:bg-gray-50 hover:border-gray-300"
-                >
-                  Çıkış Yap
-                </button>
-              </>
-            )}
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="w-full mt-4 px-4 py-2.5 text-left text-base font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                  >
+                    Çıkış Yap
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );
