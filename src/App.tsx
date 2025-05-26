@@ -4,6 +4,7 @@ import { useAuth, AuthProvider } from './hooks/useAuth';
 import { StoreProvider } from './context/StoreContext';
 import Navbar from './components/Navbar';
 import Logo from './components/Logo';
+import Footer from './components/Footer';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -92,14 +93,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <main className="max-w-full mx-auto">
         {children}
       </main>
-      {!isAdminPage && (
-        <footer className="bg-gray-100 border-t border-gray-200 py-6 mt-12">
-          <div className="max-w-7xl mx-auto flex flex-col items-center">
-            <Logo width={100} height={60} />
-            <span className="text-gray-500 text-sm mt-2">© 2024 Sana mı iş yok. Tüm hakları saklıdır.</span>
-          </div>
-        </footer>
-      )}
+      {!isAdminPage && <Footer />}
       <CookieConsent />
     </div>
   );

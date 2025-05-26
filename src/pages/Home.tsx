@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useLatestJobs } from '../hooks/useLatestJobs';
 import { getNameById } from '../services/jobConstants';
 import { JOB_TYPES, WORK_PREFERENCES, EXPERIENCE_LEVELS, SECTORS } from '../services/jobConstants';
+import { getStatistics, getCategoryStatistics, Statistics, CategoryCount } from '../services/statisticsService';
 
 const Home: React.FC = () => {
   const { user, userType, devModeLogin } = useAuth();
@@ -12,6 +13,17 @@ const Home: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { jobs: featuredJobs, loading: jobsLoading, error: jobsError } = useLatestJobs(5);
+  
+  // İstatistikler için state
+  const [statistics, setStatistics] = useState<Statistics>({
+    openPositions: 0,
+    companies: 0,
+    jobSeekers: 0,
+    satisfactionRate: 0
+  });
+  const [popularCategories, setPopularCategories] = useState<CategoryCount[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // İş arayan/kariyer görselleri
   const heroImages = [
@@ -65,14 +77,28 @@ const Home: React.FC = () => {
     setShowDevSection(!showDevSection);
   };
 
-  const popularCategories = [
-    { name: 'Yazılım Geliştirme', icon: '💻', count: 245 },
-    { name: 'Pazarlama', icon: '📊', count: 187 },
-    { name: 'Tasarım', icon: '🎨', count: 156 },
-    { name: 'Müşteri Hizmetleri', icon: '🤝', count: 134 },
-    { name: 'Finans', icon: '💰', count: 112 },
-    { name: 'İnsan Kaynakları', icon: '👥', count: 92 },
-  ];
+  // İstatistikleri yükle
+  useEffect(() => {
+    const loadStatistics = async () => {
+      try {
+        setLoading(true);
+        const [stats, categories] = await Promise.all([
+          getStatistics(),
+          getCategoryStatistics()
+        ]);
+        setStatistics(stats);
+        setPopularCategories(categories);
+        setError(null);
+      } catch (err) {
+        setError('İstatistikler yüklenirken bir hata oluştu.');
+        console.error('İstatistik yükleme hatası:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadStatistics();
+  }, []);
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -93,24 +119,73 @@ const Home: React.FC = () => {
                 <input
                   type="text"
                   placeholder="İş unvanı, pozisyon veya anahtar kelime"
-                  className="flex-grow px-4 py-3 text-gray-800 focus:outline-none rounded-l-lg"
+                  className="flex-grow px-4 py-3 text-gray-900 focus:outline-none rounded-l-lg"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && searchTerm.trim()) {
+                      navigate(`/jobs?search=${encodeURIComponent(searchTerm.trim())}`);
+                    }
+                  }}
                 />
                 <button 
-                  onClick={() => navigate('/jobs')}
+                  onClick={() => {
+                    if (searchTerm.trim()) {
+                      navigate(`/jobs?search=${encodeURIComponent(searchTerm.trim())}`);
+                    } else {
+                      navigate('/jobs');
+                    }
+                  }}
                   className="bg-blue-600 text-white px-6 py-3 rounded-r-lg font-medium hover:bg-blue-700 transition duration-200"
                 >
                   Ara
                 </button>
               </div>
               
-              <div className="flex flex-wrap gap-2 text-sm">
-                <span className="text-blue-100">Popüler aramalar:</span>
-                <button onClick={() => setSearchTerm('Yazılım')} className="text-black hover:text-yellow-300 transition">Yazılım</button>
-                <button onClick={() => setSearchTerm('Pazarlama')} className="text-black hover:text-yellow-300 transition">Pazarlama</button>
-                <button onClick={() => setSearchTerm('Uzaktan')} className="text-black hover:text-yellow-300 transition">Uzaktan</button>
-                <button onClick={() => setSearchTerm('Part-time')} className="text-black hover:text-yellow-300 transition">Part-time</button>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <span className="text-blue-100 font-medium">Popüler aramalar:</span>
+                <div className="flex flex-wrap gap-2">
+                  <button 
+                    onClick={() => {
+                      setSearchTerm('Yazılım');
+                      navigate(`/jobs?search=${encodeURIComponent('Yazılım')}`);
+                    }} 
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-300 text-sm font-medium backdrop-blur-sm"
+                  >
+                    <span className="mr-2">💻</span>
+                    Yazılım
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setSearchTerm('Pazarlama');
+                      navigate(`/jobs?search=${encodeURIComponent('Pazarlama')}`);
+                    }} 
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-300 text-sm font-medium backdrop-blur-sm"
+                  >
+                    <span className="mr-2">📊</span>
+                    Pazarlama
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setSearchTerm('Uzaktan');
+                      navigate(`/jobs?search=${encodeURIComponent('Uzaktan')}`);
+                    }} 
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-300 text-sm font-medium backdrop-blur-sm"
+                  >
+                    <span className="mr-2">🏠</span>
+                    Uzaktan
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setSearchTerm('Part-time');
+                      navigate(`/jobs?search=${encodeURIComponent('Part-time')}`);
+                    }} 
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-300 text-sm font-medium backdrop-blur-sm"
+                  >
+                    <span className="mr-2">⌛</span>
+                    Part-time
+                  </button>
+                </div>
               </div>
             </div>
             
@@ -146,24 +221,32 @@ const Home: React.FC = () => {
       {/* İstatistikler */}
       <div className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <p className="text-3xl font-bold text-blue-600">15.000+</p>
-              <p className="text-gray-500">Açık Pozisyon</p>
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             </div>
-            <div>
-              <p className="text-3xl font-bold text-blue-600">3.500+</p>
-              <p className="text-gray-500">Şirket</p>
+          ) : error ? (
+            <div className="text-center text-red-600 py-4">{error}</div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              <div>
+                <p className="text-3xl font-bold text-blue-600">{statistics.openPositions}+</p>
+                <p className="text-gray-500">Açık Pozisyon</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-blue-600">{statistics.companies}+</p>
+                <p className="text-gray-500">Şirket</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-blue-600">{statistics.jobSeekers}+</p>
+                <p className="text-gray-500">İş Arayan</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-blue-600">%{statistics.satisfactionRate}</p>
+                <p className="text-gray-500">Memnuniyet Oranı</p>
+              </div>
             </div>
-            <div>
-              <p className="text-3xl font-bold text-blue-600">120.000+</p>
-              <p className="text-gray-500">İş Arayan</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-blue-600">95%</p>
-              <p className="text-gray-500">Memnuniyet Oranı</p>
-            </div>
-          </div>
+          )}
         </div>
       </div>
       
@@ -176,19 +259,25 @@ const Home: React.FC = () => {
             <Link to="/jobs" className="text-blue-600 hover:text-blue-800 font-medium">Tümünü Gör →</Link>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {popularCategories.map((category, index) => (
-              <Link 
-                key={index} 
-                to={`/jobs?category=${category.name}`}
-                className="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6 text-center hover:scale-105 transform duration-200"
-              >
-                <div className="text-4xl mb-2">{category.icon}</div>
-                <h3 className="font-medium text-gray-900">{category.name}</h3>
-                <p className="text-blue-600 text-sm">{category.count} İlan</p>
-              </Link>
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+          ) : error ? (
+            <div className="text-center text-red-600 py-4">{error}</div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {popularCategories.map((category, index) => (
+                <div 
+                  key={index} 
+                  className="bg-white rounded-lg shadow p-6 text-center"
+                >
+                  <div className="text-4xl mb-2">{category.icon}</div>
+                  <h3 className="font-medium text-gray-900">{category.name}</h3>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
         
         {/* Öne Çıkan İlanlar */}

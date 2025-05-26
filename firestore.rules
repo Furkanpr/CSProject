@@ -4,14 +4,15 @@ service cloud.firestore {
     // Users collection - kullanıcılar kendi profillerini okuyabilir/yazabilir
     // Tüm giriş yapmış kullanıcılar diğer kullanıcı profillerini okuyabilir
     match /users/{userId} {
-      allow read, write: if request.auth != null;
+      allow read: if true; // İstatistikler için gerekli
+      allow write: if request.auth != null;
     }
     
     // Jobs collection - işverenler kendi ilanlarını yönetebilir
     // Tüm kullanıcılar iş ilanlarını okuyabilir
     // Admin onay sistemi için özel kurallar
     match /jobs/{jobId} {
-      allow read: if request.auth != null; // Tüm authenticated kullanıcılar okuyabilir
+      allow read: if true; // İstatistikler için gerekli
       allow create: if request.auth != null;
       allow update: if request.auth != null && (
         resource.data.employerId == request.auth.uid || // İşveren kendi ilanlarını güncelleyebilir
@@ -27,13 +28,24 @@ service cloud.firestore {
       );
     }
     
-    // Applications collection (eğer kullanılıyorsa)
+    // Companies collection - şirket bilgileri
+    match /companies/{companyId} {
+      allow read: if true; // İstatistikler için gerekli
+      allow write: if request.auth != null;
+    }
+    
+    // Reviews collection - değerlendirmeler
+    match /reviews/{reviewId} {
+      allow read: if true; // İstatistikler için gerekli
+      allow write: if request.auth != null;
+    }
+    
+    // Applications collection
     match /applications/{applicationId} {
       allow read, write: if request.auth != null;
     }
     
     // Notifications collection - kullanıcılar sadece kendi bildirimlerini görebilir
-    // Sistem bildirimleri oluşturabilir, kullanıcılar kendi bildirimlerini okuyabilir/güncelleyebilir
     match /notifications/{notificationId} {
       allow read: if request.auth != null && (
         request.auth.uid == resource.data.userId || 
@@ -51,6 +63,11 @@ service cloud.firestore {
         request.auth.token.email == 'admin@sanaismikyok.com' || 
         request.auth.token.email == 'fuurkandemiir@gmail.com'
       );
+    }
+
+    // Diğer tüm koleksiyonlar için genel kural
+    match /{document=**} {
+      allow read, write: if request.auth != null;
     }
   }
 } 

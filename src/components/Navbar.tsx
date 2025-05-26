@@ -71,70 +71,105 @@ const Navbar: React.FC = observer(() => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200">
+    <header className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-14">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/">
-                <Logo width={120} height={80} />
+              <Link to="/" className="flex items-center">
+                <Logo width={90} height={60} />
               </Link>
             </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <div className="hidden sm:ml-8 sm:flex sm:space-x-8">
               <Link
                 to="/"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                className={`inline-flex items-center px-3 py-2 text-sm font-medium relative group ${
                   location.pathname === '/' 
-                    ? 'border-blue-500 text-blue-600' 
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    ? 'text-blue-600' 
+                    : 'text-gray-600 hover:text-blue-600'
                 }`}
               >
-                Ana Sayfa
+                <span className="relative">
+                  Ana Sayfa
+                  <span className={`absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300 ease-out ${
+                    location.pathname === '/'
+                      ? 'bg-blue-600 scale-x-100'
+                      : 'bg-blue-600 scale-x-0 group-hover:scale-x-100'
+                  }`} />
+                </span>
               </Link>
               
               <Link
                 to="/jobs"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                className={`inline-flex items-center px-3 py-2 text-sm font-medium relative group ${
                   location.pathname === '/jobs'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    ? 'text-blue-600'
+                    : 'text-gray-600 hover:text-blue-600'
                 }`}
               >
-                İlanlar
+                <span className="relative">
+                  İlanlar
+                  <span className={`absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300 ease-out ${
+                    location.pathname === '/jobs'
+                      ? 'bg-blue-600 scale-x-100'
+                      : 'bg-blue-600 scale-x-0 group-hover:scale-x-100'
+                  }`} />
+                </span>
               </Link>
               
               <Link
                 to="/team"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                className={`inline-flex items-center px-3 py-2 text-sm font-medium relative group ${
                   location.pathname === '/team'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    ? 'text-blue-600'
+                    : 'text-gray-600 hover:text-blue-600'
                 }`}
               >
-                Ekibimiz
+                <span className="relative">
+                  Ekibimiz
+                  <span className={`absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300 ease-out ${
+                    location.pathname === '/team'
+                      ? 'bg-blue-600 scale-x-100'
+                      : 'bg-blue-600 scale-x-0 group-hover:scale-x-100'
+                  }`} />
+                </span>
               </Link>
               
               <Link
                 to="/visitors"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                className={`inline-flex items-center px-3 py-2 text-sm font-medium relative group ${
                   location.pathname === '/visitors'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    ? 'text-blue-600'
+                    : 'text-gray-600 hover:text-blue-600'
                 }`}
               >
-                Sizden Gelenler
+                <span className="relative">
+                  Sizden Gelenler
+                  <span className={`absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300 ease-out ${
+                    location.pathname === '/visitors'
+                      ? 'bg-blue-600 scale-x-100'
+                      : 'bg-blue-600 scale-x-0 group-hover:scale-x-100'
+                  }`} />
+                </span>
               </Link>
               
               {isAdmin && (
                 <Link
                   to="/admin/dashboard"
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  className={`inline-flex items-center px-3 py-2 text-sm font-medium relative group ${
                     location.pathname.startsWith('/admin')
-                      ? 'border-red-500 text-red-600'
-                      : 'border-transparent text-red-500 hover:border-red-300 hover:text-red-700'
+                      ? 'text-red-600'
+                      : 'text-red-500 hover:text-red-600'
                   }`}
                 >
-                  Admin Paneli
+                  <span className="relative">
+                    Admin Paneli
+                    <span className={`absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300 ease-out ${
+                      location.pathname.startsWith('/admin')
+                        ? 'bg-red-600 scale-x-100'
+                        : 'bg-red-600 scale-x-0 group-hover:scale-x-100'
+                    }`} />
+                  </span>
                 </Link>
               )}
             </div>
@@ -147,11 +182,11 @@ const Navbar: React.FC = observer(() => {
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   onMouseEnter={() => setDropdownOpen(true)}
-                  className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium flex items-center"
+                  className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-1.5 rounded-lg text-sm font-medium flex items-center transition-colors duration-200"
                 >
                   Giriş Yap / Üye Ol
                   <svg
-                    className={`ml-2 h-5 w-5 transform ${dropdownOpen ? 'rotate-180' : ''}`}
+                    className={`ml-2 h-4 w-4 transform ${dropdownOpen ? 'rotate-180' : ''} transition-transform duration-200`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -162,42 +197,42 @@ const Navbar: React.FC = observer(() => {
 
                 {dropdownOpen && (
                   <div
-                    className="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-md shadow-lg z-50"
+                    className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-100 z-50 transform transition-all duration-200"
                     onMouseLeave={() => setDropdownOpen(false)}
                   >
                     <div className="p-4">
                       <div className="mb-4">
-                        <p className="text-sm text-gray-600 mb-2">Aday (İş mi Arıyorsun?)</p>
+                        <p className="text-sm font-medium text-gray-700 mb-2">Aday (İş mi Arıyorsun?)</p>
                         <p className="text-xs text-gray-500 mb-3">Burada seni bekleyen binlerce ilan var!</p>
                         <div className="flex space-x-2">
                           <Link
                             to="/login?type=jobseeker"
-                            className="flex-1 text-center bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-2 rounded-md text-sm font-medium"
+                            className="flex-1 text-center bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
                           >
                             Aday Girişi
                           </Link>
                           <Link
                             to="/register?type=jobseeker"
-                            className="flex-1 text-center bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium"
+                            className="flex-1 text-center bg-blue-600 text-white hover:bg-blue-700 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
                           >
                             Üye Ol
                           </Link>
                         </div>
                       </div>
                       
-                      <div className="border-t border-gray-200 pt-4">
-                        <p className="text-sm text-gray-600 mb-2">İşveren (İlan mı Vereceksiniz?)</p>
+                      <div className="border-t border-gray-100 pt-4">
+                        <p className="text-sm font-medium text-gray-700 mb-2">İşveren (İlan mı Vereceksiniz?)</p>
                         <p className="text-xs text-gray-500 mb-3">Pozisyonunuza en uygun aday burada!</p>
                         <div className="flex space-x-2">
                           <Link
                             to="/login?type=employer"
-                            className="flex-1 text-center bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-2 rounded-md text-sm font-medium"
+                            className="flex-1 text-center bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
                           >
                             İşveren Girişi
                           </Link>
                           <Link
                             to="/register?type=employer"
-                            className="flex-1 text-center bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium"
+                            className="flex-1 text-center bg-blue-600 text-white hover:bg-blue-700 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
                           >
                             Üye Ol
                           </Link>
@@ -212,10 +247,10 @@ const Navbar: React.FC = observer(() => {
                 {userType === 'employer' && (
                   <Link
                     to="/employer/dashboard"
-                    className={`text-sm font-medium ${
+                    className={`text-sm font-medium transition-colors duration-200 ${
                       location.pathname === '/employer/dashboard'
-                        ? 'text-gray-900'
-                        : 'text-gray-500 hover:text-gray-700'
+                        ? 'text-blue-600'
+                        : 'text-gray-600 hover:text-blue-600'
                     }`}
                   >
                     İlanlarım
@@ -260,11 +295,11 @@ const Navbar: React.FC = observer(() => {
                 {userType === 'employer' && (
                   <Link
                     to="/notifications"
-                    className="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 relative"
+                    className="text-gray-600 hover:text-blue-600 p-1.5 rounded-lg hover:bg-gray-50 relative transition-colors duration-200"
                     title="Bildirimler"
                   >
                     <svg 
-                      className="h-6 w-6" 
+                      className="h-5 w-5" 
                       fill="none" 
                       viewBox="0 0 24 24" 
                       stroke="currentColor"
@@ -277,7 +312,7 @@ const Navbar: React.FC = observer(() => {
                       />
                     </svg>
                     {notificationViewModel.unreadCount > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-medium">
                         {notificationViewModel.unreadCount}
                       </span>
                     )}
@@ -286,7 +321,7 @@ const Navbar: React.FC = observer(() => {
 
                 <button
                   onClick={handleLogout}
-                  className="text-red-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-red-600 hover:text-red-700 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors duration-200"
                 >
                   Çıkış Yap
                 </button>
@@ -298,10 +333,10 @@ const Navbar: React.FC = observer(() => {
           <div className="sm:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+              className="p-1.5 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition-colors duration-200"
             >
               <span className="sr-only">Menüyü aç</span>
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
@@ -359,7 +394,7 @@ const Navbar: React.FC = observer(() => {
                       </Link>
                       <Link
                         to="/register?type=jobseeker"
-                        className="text-center bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium"
+                        className="text-center bg-blue-600 text-white hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                       >
                         Üye Ol
                       </Link>
@@ -377,7 +412,7 @@ const Navbar: React.FC = observer(() => {
                       </Link>
                       <Link
                         to="/register?type=employer"
-                        className="text-center bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium"
+                        className="text-center bg-blue-600 text-white hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                       >
                         Üye Ol
                       </Link>
