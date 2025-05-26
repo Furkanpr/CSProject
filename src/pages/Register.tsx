@@ -45,7 +45,7 @@ const Register: React.FC = () => {
     }
     setLoading(true);
     try {
-      await register(email, password, userType); // Şifre ile kayıt
+      await register(email, password, userType, name, surname); // Pass name and surname
       navigate('/');
     } catch (err: any) {
       if (err.code === 'auth/email-already-in-use') {

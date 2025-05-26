@@ -19,7 +19,7 @@ interface AuthContextType {
   user: User | null;
   userType: UserType | null;
   loading: boolean;
-  register: (email: string, password: string, userType: UserType) => Promise<void>;
+  register: (email: string, password: string, userType: UserType, name?: string, surname?: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   devModeLogin: (userType: UserType) => void;
@@ -65,11 +65,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return () => unsubscribe();
   }, []);
 
-  const register = async (email: string, password: string, userType: UserType) => {
+  const register = async (email: string, password: string, userType: UserType, name?: string, surname?: string) => {
     const { user } = await createUserWithEmailAndPassword(auth, email, password);
     await setDoc(doc(db, 'users', user.uid), {
       email,
       userType,
+      name: name && surname ? `${name} ${surname}` : undefined,
       createdAt: new Date().toISOString()
     });
     const userWithType = user as User;

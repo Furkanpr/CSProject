@@ -16,7 +16,9 @@ service cloud.firestore {
       allow update: if request.auth != null && (
         resource.data.employerId == request.auth.uid || // İşveren kendi ilanlarını güncelleyebilir
         request.auth.token.email == 'admin@sanaismikyok.com' || // Admin tüm ilanları güncelleyebilir
-        request.auth.token.email == 'fuurkandemiir@gmail.com' // Admin tüm ilanları güncelleyebilir
+        request.auth.token.email == 'fuurkandemiir@gmail.com' || // Admin tüm ilanları güncelleyebilir
+        // İş başvurusu için applicants array'ini güncelleme izni
+        (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['applicants']))
       );
       allow delete: if request.auth != null && (
         resource.data.employerId == request.auth.uid || // İşveren kendi ilanlarını silebilir
