@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { collection, query, getDocs, where } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from '../hooks/useAuth';
@@ -33,9 +33,10 @@ interface Job {
 }
 
 export default function Jobs() {
+  const [searchParams] = useSearchParams();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
   
   // Filtreleme durumları
   const [selectedType, setSelectedType] = useState('');
@@ -65,6 +66,13 @@ export default function Jobs() {
       setSelectedDistrict('');
     }
   }, [selectedCity]);
+
+  useEffect(() => {
+    const searchFromUrl = searchParams.get('search');
+    if (searchFromUrl) {
+      setSearchTerm(searchFromUrl);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     fetchJobs();
@@ -155,8 +163,15 @@ export default function Jobs() {
           <input
             type="text"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Pozisyon veya şirket ara"
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              // Üst arama kutusunu da güncelle
+              const topSearchInput = document.querySelector('input[placeholder="Email, isim veya şirket ara..."]') as HTMLInputElement;
+              if (topSearchInput) {
+                topSearchInput.value = e.target.value;
+              }
+            }}
+            placeholder="Email, isim veya şirket ara..."
             className="w-full md:w-96 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
           />
         </div>
@@ -205,7 +220,14 @@ export default function Jobs() {
               <input
                 type="text"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  // Üst arama kutusunu da güncelle
+                  const topSearchInput = document.querySelector('input[placeholder="Email, isim veya şirket ara..."]') as HTMLInputElement;
+                  if (topSearchInput) {
+                    topSearchInput.value = e.target.value;
+                  }
+                }}
                 placeholder="İş başlığı, şirket veya açıklama"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
               />

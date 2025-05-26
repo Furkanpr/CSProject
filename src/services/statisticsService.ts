@@ -19,7 +19,7 @@ export const getStatistics = async (): Promise<Statistics> => {
     // Aktif iş ilanlarını say
     const jobsQuery = query(
       collection(db, 'jobs'),
-      where('status', '==', 'approved')
+      where('status', '==', 'approved') // 'active' yerine 'approved' kullan
     );
     const jobsSnap = await getDocs(jobsQuery);
     const openPositions = jobsSnap.size;
@@ -74,7 +74,7 @@ export const getCategoryStatistics = async (): Promise<CategoryCount[]> => {
           const jobsQuery = query(
             collection(db, 'jobs'),
             where('category', '==', category.query),
-            where('status', '==', 'approved')
+            where('status', '==', 'approved') // 'active' yerine 'approved' kullan
           );
           const snapshot = await getDocs(jobsQuery);
           
@@ -99,4 +99,4 @@ export const getCategoryStatistics = async (): Promise<CategoryCount[]> => {
     console.error('Kategori istatistikleri alınırken hata:', error);
     return [];
   }
-}; 
+};
