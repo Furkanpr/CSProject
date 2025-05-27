@@ -14,6 +14,36 @@ const Visitors: React.FC = () => {
       src: "/assets/images/sizdengelenler2.jpeg",
       alt: "Proje Tanıtımı - Ziyaretçi 2", 
       description: "Demo sırasında çekilen anılar"
+    },
+    {
+      id: 3,
+      src: "/assets/images/sizdengelenler3.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 3",
+      description: "Projemizin demo sunumu"
+    },
+    {
+      id: 4,
+      src: "/assets/images/sizdengelenler4.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 4",
+      description: "Proje sunumu anları"
+    },
+    {
+      id: 5,
+      src: "/assets/images/sizdengelenler5.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 5",
+      description: "Projemizi inceleyen ziyaretçilerimiz"
+    },
+    {
+      id: 6,
+      src: "/assets/images/sizdengelenler6.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 6",
+      description: "Proje sunumu sırasında çekilen kareler"
+    },
+    {
+      id: 7,
+      src: "/assets/images/sizdengelenler7.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 7",
+      description: "Demo gösterimi anları"
     }
   ];
 
