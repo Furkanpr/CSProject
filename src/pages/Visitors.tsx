@@ -44,6 +44,60 @@ const Visitors: React.FC = () => {
       src: "/assets/images/sizdengelenler7.jpeg",
       alt: "Proje Tanıtımı - Ziyaretçi 7",
       description: "Demo gösterimi anları"
+    },
+    {
+      id: 8,
+      src: "/assets/images/sizdengelenler8.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 8",
+      description: "Proje sunumu esnasında çekilen kareler"
+    },
+    {
+      id: 9,
+      src: "/assets/images/sizdengelenler9.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 9",
+      description: "Projemizi değerlendiren ziyaretçilerimiz"
+    },
+    {
+      id: 10,
+      src: "/assets/images/sizdengelenler10.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 10",
+      description: "Demo gösterimi sırasında çekilen anlar"
+    },
+    {
+      id: 11,
+      src: "/assets/images/sizdengelenler11.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 11",
+      description: "Proje sunumu ve değerlendirme anları"
+    },
+    {
+      id: 12,
+      src: "/assets/images/sizdengelenler12.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 12",
+      description: "Projemizi inceleyen misafirlerimiz"
+    },
+    {
+      id: 13,
+      src: "/assets/images/sizdengelenler13.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 13",
+      description: "Demo sunumu esnasında çekilen kareler"
+    },
+    {
+      id: 14,
+      src: "/assets/images/sizdengelenler14.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 14",
+      description: "Proje değerlendirme anları"
+    },
+    {
+      id: 15,
+      src: "/assets/images/sizdengelenler15.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 15",
+      description: "Ziyaretçilerimizle etkileşim anları"
+    },
+    {
+      id: 16,
+      src: "/assets/images/sizdengelenler16.jpeg",
+      alt: "Proje Tanıtımı - Ziyaretçi 16",
+      description: "Proje sunumundan özel kareler"
     }
   ];
 
