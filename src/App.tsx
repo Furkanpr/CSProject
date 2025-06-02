@@ -25,9 +25,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminUsers from './pages/AdminUsers';
 
-import BlogDetail from './components/BlogDetail';
 import Team from './pages/Team';
-import Visitors from './pages/Visitors';
 import { Notifications } from './pages/Notifications';
 
 interface PrivateRouteProps {
@@ -198,9 +196,7 @@ const App: React.FC = () => {
             />
 
             {/* Blog Routes */}
-            <Route path="/blogs/:slug" element={<BlogDetail />} />
             <Route path="/team" element={<Team />} />
-            <Route path="/visitors" element={<Visitors />} />
           </Routes>
         </AppLayout>
         </StoreProvider>

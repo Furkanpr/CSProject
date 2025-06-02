@@ -135,24 +135,7 @@ const Navbar: React.FC = observer(() => {
                 </span>
               </Link>
               
-              <Link
-                to="/visitors"
-                className={`inline-flex items-center px-3 py-2 text-sm font-medium relative group ${
-                  location.pathname === '/visitors'
-                    ? 'text-blue-600'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                <span className="relative">
-                  Sizden Gelenler
-                  <span className={`absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300 ease-out ${
-                    location.pathname === '/visitors'
-                      ? 'bg-blue-600 scale-x-100'
-                      : 'bg-blue-600 scale-x-0 group-hover:scale-x-100'
-                  }`} />
-                </span>
-              </Link>
-              
+         
               {isAdmin && (
                 <Link
                   to="/admin/dashboard"
@@ -390,13 +373,7 @@ const Navbar: React.FC = observer(() => {
                 >
                   Ekibimiz
                 </Link>
-                <Link
-                  to="/visitors"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-2.5 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
-                >
-                  Sizden Gelenler
-                </Link>
+        
                 {isAdmin && (
                   <Link
                     to="/admin/dashboard"
